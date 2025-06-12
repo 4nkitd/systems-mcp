@@ -22,17 +22,15 @@ func Execute() {
 func init() {
 
 	cobra.OnInitialize()
-	rootCmd.PersistentFlags().StringVar(&key, "key", "", "API key (can be found in your dashboard)")
-	rootCmd.PersistentFlags().StringVar(&secret, "secret", "", "API secret (can be found in your dashboard)")
 	rootCmd.PersistentFlags().StringVar(&transport, "transport", "stdio", "Transport type (stdio or sse)")
 	rootCmd.PersistentFlags().StringVar(&log_dir, "log_dir", "", "Log directory (default is current directory if not specified)")
-	rootCmd.MarkPersistentFlagRequired("key")
-	rootCmd.MarkPersistentFlagRequired("secret")
+	rootCmd.PersistentFlags().StringVar(&host, "host", "localhost", "Host to bind the server to (only for sse transport)")
+	rootCmd.PersistentFlags().StringVar(&port, "port", "8080", "Port to bind the server to (only for sse transport)")
 
-	viper.BindPFlag("key", rootCmd.PersistentFlags().Lookup("key"))
-	viper.BindPFlag("secret", rootCmd.PersistentFlags().Lookup("secret"))
 	viper.BindPFlag("log_dir", rootCmd.PersistentFlags().Lookup("log_dir"))
 	viper.BindPFlag("transport", rootCmd.PersistentFlags().Lookup("transport"))
+	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
+	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 
 	rootCmd.AddCommand(serveCmd)
 

@@ -33,7 +33,9 @@ func GetCurrentWorkingDirectory(ctx context.Context, request mcp.CallToolRequest
 }
 
 func ListDirectory(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-	if path == "" {
+	// Extract path parameter from request arguments
+	path, ok := request.Params.Arguments["path"].(string)
+	if !ok || path == "" {
 		var err error
 		path, err = os.Getwd()
 		if err != nil {
@@ -93,6 +95,20 @@ func ListDirectory(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallT
 }
 
 func ReadFile(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	// Extract path parameter from request arguments
+	path, ok := request.Params.Arguments["path"].(string)
+	if !ok || path == "" {
+		return &mcp.CallToolResult{
+			Content: []mcp.Content{
+				mcp.TextContent{
+					Type: "text",
+					Text: "Error: path parameter is required",
+				},
+			},
+			IsError: true,
+		}, nil
+	}
+
 	content, err := os.ReadFile(path)
 	if err != nil {
 		return &mcp.CallToolResult{

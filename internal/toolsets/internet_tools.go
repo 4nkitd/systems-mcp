@@ -10,12 +10,12 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
-func getWeather(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-	// This is a placeholder - you would need to implement actual API calls
-	// For now, we'll use a simple curl command to a weather service
-	if location == "" {
+func GetWeather(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	// Extract location parameter from request arguments
+	location, ok := request.Params.Arguments["location"].(string)
+	if !ok || location == "" {
 		// Attempt to get current location for weather if not specified
-		locResult, err := s.getCurrentLocation()
+		locResult, err := GetCurrentLocation(ctx, request)
 		if err == nil && len(locResult.Content) > 0 {
 			if textContent, ok := locResult.Content[0].(mcp.TextContent); ok {
 				// Crude parsing of city from getCurrentLocation output for wttr.in
@@ -70,7 +70,7 @@ func getWeather(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallTool
 	}, nil
 }
 
-func getCurrentLocation(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+func GetCurrentLocation(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 	// Ensure curl is installed
 	if _, err := exec.LookPath("curl"); err != nil {
 		return &mcp.CallToolResult{

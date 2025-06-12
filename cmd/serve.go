@@ -20,26 +20,42 @@ func serveServer(cmd *cobra.Command, args []string) {
 
 	log.Println("Starting the paytring mcp server...")
 
-	key := viper.GetString("key")
-	secret := viper.GetString("secret")
 	transport := viper.GetString("transport")
+	host := viper.GetString("host")
+	port := viper.GetString("port")
 
-	log.Println("Key:", key)
-	log.Println("Secret:", secret)
 	log.Println("Log Directory:", viper.GetString("log_dir"))
+	log.Println("Transport:", transport)
 
-	mcpServer := mcp.NewPaytringMcpServer(key, secret, viper.GetString("log_dir"))
+	mcpServer := mcp.NewPaytringMcpServer(viper.GetString("log_dir"))
 	mcpServer.RegisterHooks()
 	mcpServer.RegisterTools()
 
 	// Only check for "sse" since stdio is the default
 	if transport == "sse" {
-		sseServer := server.NewSSEServer(mcpServer.Mcp, server.WithBaseURL("http://localhost:8080"))
-		log.Printf("SSE server listening on :8080")
-		if err := sseServer.Start(":8080"); err != nil {
+		address := host + ":" + port
+		baseURL := "http://" + address
+
+		sseServer := server.NewSSEServer(mcpServer.Mcp, server.WithBaseURL(baseURL))
+
+		log.Println("========================================")
+		log.Printf("🚀 MCP Server running!")
+		log.Printf("📍 URL: %s", baseURL)
+		log.Printf("🔧 Transport: SSE")
+		log.Printf("📂 Log Directory: %s", viper.GetString("log_dir"))
+		log.Println("========================================")
+
+		if err := sseServer.Start(":" + port); err != nil {
 			log.Fatalf("Server error: %v", err)
 		}
 	} else {
+		log.Println("========================================")
+		log.Printf("🚀 MCP Server running!")
+		log.Printf("🔧 Transport: STDIO")
+		log.Printf("📂 Log Directory: %s", viper.GetString("log_dir"))
+		log.Println("ℹ️  Using standard input/output for communication")
+		log.Println("========================================")
+
 		if err := server.ServeStdio(mcpServer.Mcp); err != nil {
 			log.Fatalf("Server error: %v", err)
 		}

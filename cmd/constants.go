@@ -8,10 +8,10 @@ import (
 )
 
 var (
-	key       string = "key"
-	secret    string = "secret"
 	log_dir   string = "log_dir"
 	transport string = "transport"
+	host      string = "host"
+	port      string = "port"
 )
 
 func ParseLogDir(dir string) string {

@@ -222,9 +222,48 @@ func VolumeUnmute(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallTo
 }
 
 func Speak(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-	var cmd *exec.Cmd
+	// Extract message parameter from request arguments
+	message, ok := request.Params.Arguments["message"].(string)
+	if !ok || message == "" {
+		return &mcp.CallToolResult{
+			Content: []mcp.Content{
+				mcp.TextContent{
+					Type: "text",
+					Text: "Error: message parameter is required",
+				},
+			},
+			IsError: true,
+		}, nil
+	}
 
-	cmd = exec.Command("say", message)
+	var cmd *exec.Cmd
+	switch runtime.GOOS {
+	case "darwin": // macOS
+		cmd = exec.Command("say", message)
+	case "linux":
+		if _, err := exec.LookPath("espeak"); err != nil {
+			return &mcp.CallToolResult{
+				Content: []mcp.Content{
+					mcp.TextContent{
+						Type: "text",
+						Text: "espeak is not installed. Please install espeak.",
+					},
+				},
+			}, nil
+		}
+		cmd = exec.Command("espeak", message)
+	case "windows":
+		cmd = exec.Command("powershell", "-Command", fmt.Sprintf("Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('%s')", message))
+	default:
+		return &mcp.CallToolResult{
+			Content: []mcp.Content{
+				mcp.TextContent{
+					Type: "text",
+					Text: "Text-to-speech not supported on this platform",
+				},
+			},
+		}, nil
+	}
 
 	err := cmd.Run()
 	if err != nil {
@@ -232,7 +271,7 @@ func Speak(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResul
 			Content: []mcp.Content{
 				mcp.TextContent{
 					Type: "text",
-					Text: fmt.Sprintf("Error increasing volume: %v. Command: %s", err, cmd.String()),
+					Text: fmt.Sprintf("Error speaking text: %v. Command: %s", err, cmd.String()),
 				},
 			},
 		}, nil
@@ -242,7 +281,7 @@ func Speak(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResul
 		Content: []mcp.Content{
 			mcp.TextContent{
 				Type: "text",
-				Text: "Volume increased",
+				Text: fmt.Sprintf("Spoke: %s", message),
 			},
 		},
 	}, nil

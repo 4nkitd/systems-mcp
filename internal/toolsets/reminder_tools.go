@@ -9,6 +9,26 @@ import (
 )
 
 func SetAlarm(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	// Extract time parameter from request arguments
+	timeStr, ok := request.Params.Arguments["time"].(string)
+	if !ok || timeStr == "" {
+		return &mcp.CallToolResult{
+			Content: []mcp.Content{
+				mcp.TextContent{
+					Type: "text",
+					Text: "Error: time parameter is required in HH:MM format",
+				},
+			},
+			IsError: true,
+		}, nil
+	}
+
+	// Extract optional message parameter
+	message, ok := request.Params.Arguments["message"].(string)
+	if !ok || message == "" {
+		message = "Alarm!"
+	}
+
 	// Parse time in HH:MM format
 	alarmTime, err := time.Parse("15:04", timeStr)
 	if err != nil {
@@ -33,10 +53,6 @@ func SetAlarm(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolRe
 		alarmDateTime = alarmDateTime.Add(24 * time.Hour)
 	}
 
-	if message == "" {
-		message = "Alarm!"
-	}
-
 	formattedAlarmTime := alarmDateTime.Format("2006-01-02 15:04:05")
 
 	// Start alarm in a goroutine
@@ -44,8 +60,8 @@ func SetAlarm(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolRe
 		duration := time.Until(at)
 		time.Sleep(duration)
 
-		// Trigger alarm notification via SSE and locally
-		s.triggerAlarm(at.Format("15:04:05"), msg)
+		// Simple alarm notification - could be enhanced with system notifications
+		fmt.Printf("\n🔔 ALARM: %s - %s\n", at.Format("15:04:05"), msg)
 	}(alarmDateTime, message)
 
 	return &mcp.CallToolResult{

@@ -6,48 +6,108 @@ import (
 )
 
 func (p *Paytring) RegisterTools() {
+	// Order tools as specified in copilot instructions
+	p.Mcp.AddTool(mcp.NewTool("order.create",
+		mcp.WithDescription("Creates an order"),
+		mcp.WithString("customer_id", mcp.Description("Customer ID for the order")),
+		mcp.WithArray("items", mcp.Description("Array of items in the order")),
+	),
+		toolsets.OrderCreate,
+	)
 
+	p.Mcp.AddTool(mcp.NewTool("order.fetch",
+		mcp.WithDescription("Fetch order details"),
+		mcp.WithString("order_id", mcp.Description("Order ID to fetch")),
+	),
+		toolsets.OrderFetch,
+	)
+
+	// Volume control tools
 	p.Mcp.AddTool(mcp.NewTool("volumeUp",
-		mcp.WithDescription("Increse system volume by 10"),
+		mcp.WithDescription("Increase system volume by 10"),
 	),
 		toolsets.VolumeUp,
 	)
 
-	p.Mcp.AddTool(mcp.NewTool("VolumeDown",
-		mcp.WithDescription("Descrise system volume by 10"),
+	p.Mcp.AddTool(mcp.NewTool("volumeDown",
+		mcp.WithDescription("Decrease system volume by 10"),
 	),
 		toolsets.VolumeDown,
 	)
 
-	p.Mcp.AddTool(mcp.NewTool("VolumeMute",
+	p.Mcp.AddTool(mcp.NewTool("volumeMute",
 		mcp.WithDescription("Mute system volume"),
 	),
 		toolsets.VolumeMute,
 	)
 
-	p.Mcp.AddTool(mcp.NewTool("VolumeUnmute",
-		mcp.WithDescription("UnMute system volume"),
+	p.Mcp.AddTool(mcp.NewTool("volumeUnmute",
+		mcp.WithDescription("Unmute system volume"),
 	),
 		toolsets.VolumeUnmute,
 	)
 
-	// SaveToInfo
-	p.Mcp.AddTool(mcp.NewTool("SaveInfo",
-		mcp.WithDescription("SaveInfo to rememeber"),
+	p.Mcp.AddTool(mcp.NewTool("speak",
+		mcp.WithDescription("Speak text using text-to-speech"),
+		mcp.WithString("message", mcp.Description("Text to speak")),
+	),
+		toolsets.Speak,
+	)
+
+	// Memory tools
+	p.Mcp.AddTool(mcp.NewTool("saveInfo",
+		mcp.WithDescription("Save information to remember"),
 	),
 		toolsets.SaveInfo,
 	)
 
-	p.Mcp.AddTool(mcp.NewTool("GetSavedInfo",
-		mcp.WithDescription("GetSavedInfo you saved rememeber"),
+	p.Mcp.AddTool(mcp.NewTool("getSavedInfo",
+		mcp.WithDescription("Get saved information"),
 	),
 		toolsets.GetSavedInfo,
 	)
 
-	// alarm
-	p.Mcp.AddTool(mcp.NewTool("SetAlarm",
-		mcp.WithDescription("SetAlarm to remind ankit for stuff"),
+	// Reminder tools
+	p.Mcp.AddTool(mcp.NewTool("setAlarm",
+		mcp.WithDescription("Set an alarm to remind for tasks"),
+		mcp.WithString("time", mcp.Description("Time in HH:MM format (24-hour)")),
+		mcp.WithString("message", mcp.Description("Alarm message (optional)")),
 	),
 		toolsets.SetAlarm,
+	)
+
+	// Filesystem tools
+	p.Mcp.AddTool(mcp.NewTool("getCurrentWorkingDirectory",
+		mcp.WithDescription("Get current working directory"),
+	),
+		toolsets.GetCurrentWorkingDirectory,
+	)
+
+	p.Mcp.AddTool(mcp.NewTool("listDirectory",
+		mcp.WithDescription("List directory contents"),
+		mcp.WithString("path", mcp.Description("Directory path to list (optional, defaults to current directory)")),
+	),
+		toolsets.ListDirectory,
+	)
+
+	p.Mcp.AddTool(mcp.NewTool("readFile",
+		mcp.WithDescription("Read file contents"),
+		mcp.WithString("path", mcp.Description("File path to read")),
+	),
+		toolsets.ReadFile,
+	)
+
+	// Internet tools
+	p.Mcp.AddTool(mcp.NewTool("getWeather",
+		mcp.WithDescription("Get weather information for a location"),
+		mcp.WithString("location", mcp.Description("Location to get weather for (optional, defaults to current location)")),
+	),
+		toolsets.GetWeather,
+	)
+
+	p.Mcp.AddTool(mcp.NewTool("getCurrentLocation",
+		mcp.WithDescription("Get current location information"),
+	),
+		toolsets.GetCurrentLocation,
 	)
 }
