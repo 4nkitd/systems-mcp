@@ -6,21 +6,6 @@ import (
 )
 
 func (p *Paytring) RegisterTools() {
-	// Order tools as specified in copilot instructions
-	p.Mcp.AddTool(mcp.NewTool("order.create",
-		mcp.WithDescription("Creates an order"),
-		mcp.WithString("customer_id", mcp.Description("Customer ID for the order")),
-		mcp.WithArray("items", mcp.Description("Array of items in the order")),
-	),
-		toolsets.OrderCreate,
-	)
-
-	p.Mcp.AddTool(mcp.NewTool("order.fetch",
-		mcp.WithDescription("Fetch order details"),
-		mcp.WithString("order_id", mcp.Description("Order ID to fetch")),
-	),
-		toolsets.OrderFetch,
-	)
 
 	// Volume control tools
 	p.Mcp.AddTool(mcp.NewTool("volumeUp",
