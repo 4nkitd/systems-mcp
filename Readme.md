@@ -32,21 +32,21 @@ A Model Context Protocol (MCP) server that provides system interaction tools for
 
 Download the latest prebuilt binaries for your platform from the GitHub Releases page:
 
-- Linux / macOS (tar.gz): https://github.com/4nkitd/systems-mcp/releases/latest/download/paytring_mcp.tar.gz
-- Windows (zip): https://github.com/4nkitd/systems-mcp/releases/latest/download/paytring_mcp.zip
+- Linux / macOS (tar.gz): https://github.com/4nkitd/systems-mcp/releases/latest/download/systems_mcp.tar.gz
+- Windows (zip): https://github.com/4nkitd/systems-mcp/releases/latest/download/systems_mcp.zip
 
 After downloading, extract and run:
 
 ```bash
-tar -xzf paytring_mcp.tar.gz
-./paytring_mcp serve
+tar -xzf systems_mcp.tar.gz
+./systems_mcp serve
 ```
 
 For Windows:
 
 ```powershell
-Expand-Archive paytring_mcp.zip
-.\paytring_mcp.exe serve
+Expand-Archive systems_mcp.zip
+.\systems_mcp.exe serve
 ```
 
 
