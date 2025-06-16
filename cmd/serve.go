@@ -3,7 +3,7 @@ package cmd
 import (
 	"log"
 
-	"github.com/4nkitd/mcp/internal/mcp"
+	"github.com/4nkitd/systems-mcp/internal/mcp"
 	"github.com/mark3labs/mcp-go/server"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

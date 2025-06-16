@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/4nkitd/systems-mcp/internal/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -15,7 +16,7 @@ func Execute() {
 	// Execute the root command
 	if err := rootCmd.Execute(); err != nil {
 		// Handle error
-
+		log.Write("ERROR", err.Error())
 	}
 }
 

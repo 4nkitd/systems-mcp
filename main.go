@@ -1,6 +1,6 @@
 package main
 
-import "github.com/4nkitd/mcp/cmd"
+import "github.com/4nkitd/systems-mcp/cmd"
 
 // prompt
 

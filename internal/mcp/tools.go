@@ -1,7 +1,7 @@
 package mcp
 
 import (
-	"github.com/4nkitd/mcp/internal/toolsets"
+	"github.com/4nkitd/systems-mcp/internal/toolsets"
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
@@ -42,12 +42,15 @@ func (p *Paytring) RegisterTools() {
 	// Memory tools
 	p.Mcp.AddTool(mcp.NewTool("saveInfo",
 		mcp.WithDescription("Save information to remember"),
+		mcp.WithString("key", mcp.Description("Key to store information under")),
+		mcp.WithString("value", mcp.Description("Information to store")),
 	),
 		toolsets.SaveInfo,
 	)
 
 	p.Mcp.AddTool(mcp.NewTool("getSavedInfo",
 		mcp.WithDescription("Get saved information"),
+		mcp.WithString("key", mcp.Description("Key to retrieve information")),
 	),
 		toolsets.GetSavedInfo,
 	)

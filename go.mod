@@ -1,4 +1,4 @@
-module github.com/4nkitd/mcp
+module github.com/4nkitd/systems-mcp
 
 go 1.23.4
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/4nkitd/mcp/internal/log"
+	"github.com/4nkitd/systems-mcp/internal/log"
 )
 
 var (
