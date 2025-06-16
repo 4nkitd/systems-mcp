@@ -8,7 +8,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
-func (p *4nkitd) RegisterHooks() {
+func (p *ankitd) RegisterHooks() {
 
 	p.hooks.AddBeforeAny(func(ctx context.Context, id any, method mcp.MCPMethod, message any) {
 		log.Write("DEBUG", fmt.Sprintf("beforeAny: %s, %v, %v\n", method, id, message))

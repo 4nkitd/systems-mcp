@@ -4,13 +4,13 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 )
 
-type 4nkitd struct {
+type ankitd struct {
 	LogDir string
 	Mcp    *server.MCPServer
 	hooks  *server.Hooks
 }
 
-func New4nkitdMcpServer(logDir string) *4nkitd {
+func New4nkitdMcpServer(logDir string) *ankitd {
 
 	hooks := &server.Hooks{}
 
@@ -24,7 +24,7 @@ func New4nkitdMcpServer(logDir string) *4nkitd {
 		server.WithHooks(hooks),
 	)
 
-	instance := &4nkitd{
+	instance := &ankitd{
 		LogDir: logDir,
 		Mcp:    mcpServer,
 		hooks:  hooks,

@@ -1,3 +1,4 @@
+version: 2
 # GoReleaser configuration for systems-mcp (4nkitd_mcp)
 # https://goreleaser.com/
 
@@ -64,7 +65,6 @@ archives:
 
 checksum:
   name_template: "checksums_{{ .Version }}.txt"
-
 # Optional brew tap configuration. Uncomment and update owner/name if using Homebrew.
 # brew:
 #   github:
