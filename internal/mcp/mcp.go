@@ -4,18 +4,18 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 )
 
-type Paytring struct {
+type 4nkitd struct {
 	LogDir string
 	Mcp    *server.MCPServer
 	hooks  *server.Hooks
 }
 
-func NewPaytringMcpServer(logDir string) *Paytring {
+func New4nkitdMcpServer(logDir string) *4nkitd {
 
 	hooks := &server.Hooks{}
 
 	mcpServer := server.NewMCPServer(
-		"paytring-mcp-server",
+		"4nkitd-mcp-server",
 		"0.1.0",
 		server.WithResourceCapabilities(false, false),
 		server.WithPromptCapabilities(false),
@@ -24,7 +24,7 @@ func NewPaytringMcpServer(logDir string) *Paytring {
 		server.WithHooks(hooks),
 	)
 
-	instance := &Paytring{
+	instance := &4nkitd{
 		LogDir: logDir,
 		Mcp:    mcpServer,
 		hooks:  hooks,

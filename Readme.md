@@ -1,4 +1,4 @@
-# Paytring MCP Server
+# 4nkitd MCP Server
 
 A Model Context Protocol (MCP) server that provides system interaction tools for AI assistants. This server enables AI models to interact with your local system through a comprehensive set of tools including volume control, text-to-speech, file system operations, weather information, and more.
 
@@ -37,7 +37,7 @@ A Model Context Protocol (MCP) server that provides system interaction tools for
 git clone https://github.com/4nkitd/systems-mcp.git
 cd systems-mcp/mcp-server
 go mod download
-go build -o paytring-mcp ./main.go
+go build -o 4nkitd-mcp ./main.go
 ```
 
 ## Usage
@@ -45,7 +45,7 @@ go build -o paytring-mcp ./main.go
 ### Command Line Options
 
 ```bash
-./paytring-mcp serve [flags]
+./4nkitd-mcp serve [flags]
 ```
 
 #### Available Flags:
@@ -59,13 +59,13 @@ go build -o paytring-mcp ./main.go
 #### STDIO Mode (Default)
 Best for direct integration with AI assistants like Claude Desktop:
 ```bash
-./paytring-mcp serve --transport stdio
+./4nkitd-mcp serve --transport stdio
 ```
 
 #### SSE Mode
 For web-based integrations:
 ```bash
-./paytring-mcp serve --transport sse --host localhost --port 8080
+./4nkitd-mcp serve --transport sse --host localhost --port 8080
 ```
 
 ## Configuration
@@ -79,8 +79,8 @@ Add to your Claude Desktop configuration file:
 ```json
 {
   "mcpServers": {
-    "paytring-mcp": {
-      "command": "/path/to/paytring-mcp",
+    "4nkitd-mcp": {
+      "command": "/path/to/4nkitd-mcp",
       "args": ["serve", "--transport", "stdio"],
       "env": {}
     }

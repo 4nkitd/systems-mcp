@@ -1,7 +1,7 @@
-# GoReleaser configuration for systems-mcp (paytring_mcp)
+# GoReleaser configuration for systems-mcp (4nkitd_mcp)
 # https://goreleaser.com/
 
-project_name: paytring_mcp
+project_name: 4nkitd_mcp
 release:
   github:
     owner: 4nkitd
@@ -27,9 +27,9 @@ before:
     - go mod tidy
 
 builds:
-  - id: paytring_mcp
+  - id: 4nkitd_mcp
     main: ./main.go
-    binary: paytring_mcp
+    binary: 4nkitd_mcp
     env:
       - CGO_ENABLED=0
     goos:
@@ -48,7 +48,7 @@ builds:
 archives:
   - id: default
     builds:
-      - paytring_mcp
+      - 4nkitd_mcp
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -71,7 +71,7 @@ checksum:
 #     owner: 4nkitd
 #     name: homebrew-tap
 #   folder: Formula
-#   name: paytring_mcp
+#   name: 4nkitd_mcp
 #   commit_author:
 #     name: "GitHub Actions"
 #     email: "actions@github.com"
@@ -79,6 +79,6 @@ checksum:
 # Optional Docker image build/publish. Uncomment if you want to push a container.
 # docker:
 #   images:
-#     - name: "ghcr.io/4nkitd/systems-mcp/paytring_mcp"
+#     - name: "ghcr.io/4nkitd/systems-mcp/4nkitd_mcp"
 #       goos: linux
 #       goarch: amd64

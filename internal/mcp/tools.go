@@ -5,7 +5,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
-func (p *Paytring) RegisterTools() {
+func (p *4nkitd) RegisterTools() {
 
 	// Volume control tools
 	p.Mcp.AddTool(mcp.NewTool("volumeUp",

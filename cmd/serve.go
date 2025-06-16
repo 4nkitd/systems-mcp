@@ -11,14 +11,14 @@ import (
 
 var serveCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "Start the paytring mcp server",
-	Long:  `This command starts the paytring mcp server. It will listen for incoming requests and process them accordingly.`,
+	Short: "Start the 4nkitd mcp server",
+	Long:  `This command starts the 4nkitd mcp server. It will listen for incoming requests and process them accordingly.`,
 	Run:   serveServer,
 }
 
 func serveServer(cmd *cobra.Command, args []string) {
 
-	log.Println("Starting the paytring mcp server...")
+	log.Println("Starting the 4nkitd mcp server...")
 
 	transport := viper.GetString("transport")
 	host := viper.GetString("host")
@@ -27,7 +27,7 @@ func serveServer(cmd *cobra.Command, args []string) {
 	log.Println("Log Directory:", viper.GetString("log_dir"))
 	log.Println("Transport:", transport)
 
-	mcpServer := mcp.NewPaytringMcpServer(viper.GetString("log_dir"))
+	mcpServer := mcp.New4nkitdMcpServer(viper.GetString("log_dir"))
 	mcpServer.RegisterHooks()
 	mcpServer.RegisterTools()
 
