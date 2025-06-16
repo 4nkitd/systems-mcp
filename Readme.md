@@ -1,4 +1,4 @@
-# 4nkitd MCP Server
+# Systems MCP Server
 
 A Model Context Protocol (MCP) server that provides system interaction tools for AI assistants. This server enables AI models to interact with your local system through a comprehensive set of tools including volume control, text-to-speech, file system operations, weather information, and more.
 
@@ -27,6 +27,28 @@ A Model Context Protocol (MCP) server that provides system interaction tools for
 - **Current Location**: Retrieve current geographical location
 
 ## Installation
+
+### Releases
+
+Download the latest prebuilt binaries for your platform from the GitHub Releases page:
+
+- Linux / macOS (tar.gz): https://github.com/4nkitd/systems-mcp/releases/latest/download/paytring_mcp.tar.gz
+- Windows (zip): https://github.com/4nkitd/systems-mcp/releases/latest/download/paytring_mcp.zip
+
+After downloading, extract and run:
+
+```bash
+tar -xzf paytring_mcp.tar.gz
+./paytring_mcp serve
+```
+
+For Windows:
+
+```powershell
+Expand-Archive paytring_mcp.zip
+.\paytring_mcp.exe serve
+```
+
 
 ### Prerequisites
 - Go 1.23.4 or later

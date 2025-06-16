@@ -1,84 +1,26 @@
 version: 2
-# GoReleaser configuration for systems-mcp (4nkitd_mcp)
-# https://goreleaser.com/
-
-project_name: 4nkitd_mcp
-release:
-  github:
-    owner: 4nkitd
-    name: systems-mcp
-  draft: false
-  prerelease: auto
-
-snapshot:
-  # disable snapshots by default; remove or change if you need snapshot releases
-  disabled: false
-  name_template: "{{ .Tag }}-snapshot"
-
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
-      - "^chore:"
-
-before:
-  hooks:
-    - go mod tidy
 
 builds:
-  - id: 4nkitd_mcp
-    main: ./main.go
-    binary: 4nkitd_mcp
-    env:
-      - CGO_ENABLED=0
+  - main: ./cmd/cli
+    id: "cli"
+    binary: cli
     goos:
       - linux
       - darwin
       - windows
-    goarch:
-      - amd64
-      - arm64
-    goarm:
-      - 6
-    ldflags:
-      - -s
-      - -w
 
-archives:
-  - id: default
-    builds:
-      - 4nkitd_mcp
-    format: tar.gz
-    format_overrides:
-      - goos: windows
-        format: zip
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-    replacements:
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-    files:
-      - LICENSE
-      - README.md
+  - main: ./cmd/worker
+    id: "worker"
+    binary: worker
+    goos:
+      - linux
+      - darwin
+      - windows
 
-checksum:
-  name_template: "checksums_{{ .Version }}.txt"
-# Optional brew tap configuration. Uncomment and update owner/name if using Homebrew.
-# brew:
-#   github:
-#     owner: 4nkitd
-#     name: homebrew-tap
-#   folder: Formula
-#   name: 4nkitd_mcp
-#   commit_author:
-#     name: "GitHub Actions"
-#     email: "actions@github.com"
-
-# Optional Docker image build/publish. Uncomment if you want to push a container.
-# docker:
-#   images:
-#     - name: "ghcr.io/4nkitd/systems-mcp/4nkitd_mcp"
-#       goos: linux
-#       goarch: amd64
+  - main: ./cmd/tracker
+    id: "tracker"
+    binary: tracker
+    goos:
+      - linux
+      - darwin
+      - windows
