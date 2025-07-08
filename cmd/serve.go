@@ -26,8 +26,13 @@ func serveServer(cmd *cobra.Command, args []string) {
 
 	log.Println("Log Directory:", viper.GetString("log_dir"))
 	log.Println("Transport:", transport)
+	log.Println("Memory Path:", viper.GetString("memory_path"))
 
-	mcpServer := mcp.New4nkitdMcpServer(viper.GetString("log_dir"))
+	config := &mcp.Config{
+		LogDir:     viper.GetString("log_dir"),
+		MemoryPath: viper.GetString("memory_path"),
+	}
+	mcpServer := mcp.New4nkitdMcpServer(config)
 	mcpServer.RegisterHooks()
 	mcpServer.RegisterTools()
 
@@ -43,6 +48,7 @@ func serveServer(cmd *cobra.Command, args []string) {
 		log.Printf("📍 URL: %s", baseURL)
 		log.Printf("🔧 Transport: SSE")
 		log.Printf("📂 Log Directory: %s", viper.GetString("log_dir"))
+		log.Printf("💾 Memory Path: %s", viper.GetString("memory_path"))
 		log.Println("========================================")
 
 		if err := sseServer.Start(":" + port); err != nil {
@@ -53,6 +59,7 @@ func serveServer(cmd *cobra.Command, args []string) {
 		log.Printf("🚀 MCP Server running!")
 		log.Printf("🔧 Transport: STDIO")
 		log.Printf("📂 Log Directory: %s", viper.GetString("log_dir"))
+		log.Printf("💾 Memory Path: %s", viper.GetString("memory_path"))
 		log.Println("ℹ️  Using standard input/output for communication")
 		log.Println("========================================")
 

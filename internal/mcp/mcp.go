@@ -1,18 +1,34 @@
 package mcp
 
 import (
+	"log"
+
+	"github.com/4nkitd/systems-mcp/internal/toolsets"
 	"github.com/mark3labs/mcp-go/server"
 )
 
-type ankitd struct {
-	LogDir string
-	Mcp    *server.MCPServer
-	hooks  *server.Hooks
+// Config holds the configuration for the MCP server.
+type Config struct {
+	LogDir     string
+	MemoryPath string
 }
 
-func New4nkitdMcpServer(logDir string) *ankitd {
+type ankitd struct {
+	LogDir      string
+	Mcp         *server.MCPServer
+	hooks       *server.Hooks
+	memoryTools *toolsets.MemoryTools
+}
+
+func New4nkitdMcpServer(config *Config) *ankitd {
 
 	hooks := &server.Hooks{}
+
+	mem, err := toolsets.NewMemory(config.MemoryPath)
+	if err != nil {
+		log.Fatalf("failed to create memory: %v", err)
+	}
+	memoryTools := toolsets.NewMemoryTools(mem)
 
 	mcpServer := server.NewMCPServer(
 		"4nkitd-mcp-server",
@@ -25,9 +41,10 @@ func New4nkitdMcpServer(logDir string) *ankitd {
 	)
 
 	instance := &ankitd{
-		LogDir: logDir,
-		Mcp:    mcpServer,
-		hooks:  hooks,
+		LogDir:      config.LogDir,
+		Mcp:         mcpServer,
+		hooks:       hooks,
+		memoryTools: memoryTools,
 	}
 
 	// instance.RegisterHooks()

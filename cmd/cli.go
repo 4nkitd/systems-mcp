@@ -6,11 +6,14 @@ import (
 	"github.com/spf13/viper"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "4nkitd_mcp",
-	Short: "A brief description of your application",
-	Long:  `A longer description that spans multiple lines and likely contains examples and usage of using your application.`,
-}
+var (
+	rootCmd = &cobra.Command{
+		Use:   "4nkitd_mcp",
+		Short: "A brief description of your application",
+		Long:  `A longer description that spans multiple lines and likely contains examples and usage of using your application.`,
+	}
+	memory_path string
+)
 
 func Execute() {
 	// Execute the root command
@@ -27,11 +30,13 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&log_dir, "log_dir", "", "Log directory (default is current directory if not specified)")
 	rootCmd.PersistentFlags().StringVar(&host, "host", "localhost", "Host to bind the server to (only for sse transport)")
 	rootCmd.PersistentFlags().StringVar(&port, "port", "8080", "Port to bind the server to (only for sse transport)")
+	rootCmd.PersistentFlags().StringVar(&memory_path, "memory_path", "", "Path to memory file (default is ~/.mcp/memory.json)")
 
 	viper.BindPFlag("log_dir", rootCmd.PersistentFlags().Lookup("log_dir"))
 	viper.BindPFlag("transport", rootCmd.PersistentFlags().Lookup("transport"))
 	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
+	viper.BindPFlag("memory_path", rootCmd.PersistentFlags().Lookup("memory_path"))
 
 	rootCmd.AddCommand(serveCmd)
 

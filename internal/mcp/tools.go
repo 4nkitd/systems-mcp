@@ -45,14 +45,14 @@ func (p *ankitd) RegisterTools() {
 		mcp.WithString("key", mcp.Description("Key to store information under")),
 		mcp.WithString("value", mcp.Description("Information to store")),
 	),
-		toolsets.SaveInfo,
+		p.memoryTools.SaveInfo,
 	)
 
 	p.Mcp.AddTool(mcp.NewTool("getSavedInfo",
-		mcp.WithDescription("Get saved information"),
-		mcp.WithString("key", mcp.Description("Key to retrieve information")),
+		mcp.WithDescription("Get saved information. If no key is provided, all information is returned."),
+		mcp.WithString("key", mcp.Description("Key to retrieve information (optional)")),
 	),
-		toolsets.GetSavedInfo,
+		p.memoryTools.GetSavedInfo,
 	)
 
 	// Reminder tools

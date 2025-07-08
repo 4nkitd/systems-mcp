@@ -90,6 +90,16 @@ For web-based integrations:
 ./4nkitd-mcp serve --transport sse --host localhost --port 8080
 ```
 
+### Local Release (Dry Run)
+
+To build and package the project locally without creating or publishing a GitHub release, run:
+
+```bash
+goreleaser release --snapshot --rm-dist --skip-publish
+```
+
+This will generate the versioned archives under the `dist/` directory.
+
 ## Configuration
 
 ### Claude Desktop Integration
