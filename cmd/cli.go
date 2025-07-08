@@ -12,7 +12,8 @@ var (
 		Short: "A brief description of your application",
 		Long:  `A longer description that spans multiple lines and likely contains examples and usage of using your application.`,
 	}
-	memory_path string
+	memory_path   string
+	fetch_url_api string
 )
 
 func Execute() {
@@ -31,12 +32,14 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&host, "host", "localhost", "Host to bind the server to (only for sse transport)")
 	rootCmd.PersistentFlags().StringVar(&port, "port", "8080", "Port to bind the server to (only for sse transport)")
 	rootCmd.PersistentFlags().StringVar(&memory_path, "memory_path", "", "Path to memory file (default is ~/.mcp/memory.json)")
+	rootCmd.PersistentFlags().StringVar(&fetch_url_api, "fetch_url_api", "https://md.dhr.wtf/", "API URL for fetching URL content")
 
 	viper.BindPFlag("log_dir", rootCmd.PersistentFlags().Lookup("log_dir"))
 	viper.BindPFlag("transport", rootCmd.PersistentFlags().Lookup("transport"))
 	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 	viper.BindPFlag("memory_path", rootCmd.PersistentFlags().Lookup("memory_path"))
+	viper.BindPFlag("fetch_url_api", rootCmd.PersistentFlags().Lookup("fetch_url_api"))
 
 	rootCmd.AddCommand(serveCmd)
 

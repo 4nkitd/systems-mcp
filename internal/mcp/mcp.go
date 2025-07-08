@@ -9,15 +9,17 @@ import (
 
 // Config holds the configuration for the MCP server.
 type Config struct {
-	LogDir     string
-	MemoryPath string
+	LogDir      string
+	MemoryPath  string
+	FetchURLAPI string
 }
 
 type ankitd struct {
-	LogDir      string
-	Mcp         *server.MCPServer
-	hooks       *server.Hooks
-	memoryTools *toolsets.MemoryTools
+	LogDir        string
+	Mcp           *server.MCPServer
+	hooks         *server.Hooks
+	memoryTools   *toolsets.MemoryTools
+	internetTools *toolsets.InternetTools
 }
 
 func New4nkitdMcpServer(config *Config) *ankitd {
@@ -30,6 +32,8 @@ func New4nkitdMcpServer(config *Config) *ankitd {
 	}
 	memoryTools := toolsets.NewMemoryTools(mem)
 
+	internetTools := toolsets.NewInternetTools(config.FetchURLAPI)
+
 	mcpServer := server.NewMCPServer(
 		"4nkitd-mcp-server",
 		"0.1.0",
@@ -41,10 +45,11 @@ func New4nkitdMcpServer(config *Config) *ankitd {
 	)
 
 	instance := &ankitd{
-		LogDir:      config.LogDir,
-		Mcp:         mcpServer,
-		hooks:       hooks,
-		memoryTools: memoryTools,
+		LogDir:        config.LogDir,
+		Mcp:           mcpServer,
+		hooks:         hooks,
+		memoryTools:   memoryTools,
+		internetTools: internetTools,
 	}
 
 	// instance.RegisterHooks()

@@ -90,12 +90,19 @@ func (p *ankitd) RegisterTools() {
 		mcp.WithDescription("Get weather information for a location"),
 		mcp.WithString("location", mcp.Description("Location to get weather for (optional, defaults to current location)")),
 	),
-		toolsets.GetWeather,
+		p.internetTools.GetWeather,
 	)
 
 	p.Mcp.AddTool(mcp.NewTool("getCurrentLocation",
 		mcp.WithDescription("Get current location information"),
 	),
-		toolsets.GetCurrentLocation,
+		p.internetTools.GetCurrentLocation,
+	)
+
+	p.Mcp.AddTool(mcp.NewTool("fetchURL",
+		mcp.WithDescription("Fetch the markdown content of a URL"),
+		mcp.WithString("url", mcp.Description("URL to fetch")),
+	),
+		p.internetTools.FetchURL,
 	)
 }

@@ -10,8 +10,8 @@ A Model Context Protocol (MCP) server that provides system interaction tools for
 - **Text-to-Speech**: Convert text to speech using system TTS
 
 ### 💾 Memory & Data Management
-- **Save Information**: Persist information under a key/value pair (stored in JSON file)
-- **Get Saved Info**: Retrieve information by key (stored in JSON file)
+- **Save Information**: Persist information under a key/value pair.
+- **Get Saved Info**: Retrieve information by key. The memory file path is configurable and defaults to `~/.mcp/memory.json`.
 
 ### ⏰ Reminders & Alarms
 - **Set Alarm**: Schedule alarms with custom messages
@@ -25,6 +25,7 @@ A Model Context Protocol (MCP) server that provides system interaction tools for
 ### 🌤️ Internet & Location Services
 - **Weather Information**: Get weather data for any location
 - **Current Location**: Retrieve current geographical location
+- **Fetch URL Content**: Fetch the markdown content of a URL using a configurable API.
 
 ## Installation
 
@@ -75,6 +76,8 @@ go build -o 4nkitd-mcp ./main.go
 - `--log_dir`: Log directory path - Default: current directory
 - `--host`: Host to bind server (SSE only) - Default: `localhost`
 - `--port`: Port to bind server (SSE only) - Default: `8080`
+- `--memory_path`: Path to memory file - Default: `~/.mcp/memory.json`
+- `--fetch_url_api`: API URL for fetching URL content - Default: `https://md.dhr.wtf/`
 
 ### Transport Modes
 
@@ -138,13 +141,14 @@ The server can be configured using the following environment variables:
 | `volumeUnmute` | Unmute system volume | None |
 | `speak` | Text-to-speech conversion | `message` (string) |
 | `saveInfo` | Save information to memory | `key` (string), `value` (string) |
-| `getSavedInfo` | Retrieve saved information | `key` (string, optional) |
+| `getSavedInfo` | Get saved information. If no key is provided, all information is returned. | `key` (string, optional) |
 | `setAlarm` | Set an alarm reminder | `time` (HH:MM), `message` (optional) |
 | `getCurrentWorkingDirectory` | Get current directory | None |
 | `listDirectory` | List directory contents | `path` (optional) |
 | `readFile` | Read file contents | `path` (required) |
 | `getWeather` | Get weather information | `location` (optional) |
 | `getCurrentLocation` | Get current location | None |
+| `fetchURL` | Fetch the markdown content of a URL | `url` (required) |
 
 ## Development
 
